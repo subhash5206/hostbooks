@@ -10,10 +10,9 @@ public interface StudentDao {
 
 	public List<Student> getAllStudents();
 
-	public Student deleteStudent(Student student);
-
-
 	public Student updateStudent(Student student);
 
-	Student getStudentByID(Student student, Integer id);
+	Student getStudentByID(Integer id);
+
+	void deleteStudent(Integer id);
 }

@@ -28,14 +28,13 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Transactional
-	public Student deleteStudent(Student student) {
-		return studentDao.deleteStudent(student);
-
+	public void deleteStudent(Integer id) {
+		studentDao.deleteStudent(id);
 	}
 
 	@Transactional
-	public Student getStudentByID(Student student, Integer id) {
-		return studentDao.getStudentByID(student, id);
+	public Student getStudentByID(Integer id) {
+		return studentDao.getStudentByID(id);
 
 	}
 

@@ -25,7 +25,7 @@ public class StudentController {
 	private StudentService service;
 
 	@GetMapping("/fetch")
-	public ResponseEntity<List<Student>> getStudents(@RequestBody Student student) {
+	public ResponseEntity<List<Student>> getStudents() {
 		List<Student> list = service.getStudents();
 		ResponseEntity<List<Student>> response = new ResponseEntity<List<Student>>(list, HttpStatus.FOUND);
 		return response;
@@ -39,22 +39,23 @@ public class StudentController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteStudent(@PathVariable Integer id, @RequestBody Student student) {
-		student.setStudentId(id);
-		service.deleteStudent(student);
+	public ResponseEntity<String> deleteStudent(@PathVariable Integer id) {
+		//student.setStudentId(id);
+		service.deleteStudent(id);
 		ResponseEntity<String> response = new ResponseEntity<String>("Data Deleted", HttpStatus.OK);
 		return response;
 	}
-	
+
 	@GetMapping("/fetch/{id}")
-	public ResponseEntity<Student> getStudentById(@PathVariable Integer id, @RequestBody Student student) {
-		student.setStudentId(id);
-		service.getStudentByID(student, id);
+	public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
+		//student.setStudentId(id);
+		Student student=service.getStudentByID(id);
 		ResponseEntity<Student> response = new ResponseEntity<Student>(student, HttpStatus.OK);
 		return response;
 	}
-	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updateStudent(@RequestBody Student student,@PathVariable Integer id) {
+
+	@PutMapping("/update")
+	public ResponseEntity<String> updateStudent(@RequestBody Student student) {
 		service.updateStudent(student);
 		ResponseEntity<String> response = new ResponseEntity<String>("Data Saved", HttpStatus.CREATED);
 		return response;

@@ -9,9 +9,9 @@ public interface StudentService {
 
 	public List<Student> getStudents();
 
-	public Student deleteStudent(Student student);
+	public void deleteStudent(Integer id);
 
-	public Student getStudentByID(Student student,Integer id);
+	public Student getStudentByID(Integer id);
 
 	public Student updateStudent(Student student);
 }

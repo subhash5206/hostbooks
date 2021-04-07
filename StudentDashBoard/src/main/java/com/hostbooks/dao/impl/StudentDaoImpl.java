@@ -60,21 +60,25 @@ public class StudentDaoImpl implements StudentDao {
 	}
 
 	@Override
-	public Student deleteStudent(Student student) {
+	public void deleteStudent(Integer id) {
 		try {
-			em.remove(student);
-			return student;
+			Student st = em.find(Student.class, id);
+			if(st==null) {
+				//TODO
+			}
+			
+			em.remove(st);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
 		}
 	}
 
 	@Override
-	public Student getStudentByID(Student student, Integer id) {
-		Student response = (Student) em.find(Student.class, id);
+	public Student getStudentByID(Integer id) {
+		Student student = (Student) em.find(Student.class, id);
 
-		return response;
+		return student;
 	}
 
 }
