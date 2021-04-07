@@ -2,10 +2,15 @@ package com.hostbooks.controller;
 
 import java.util.List;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +24,7 @@ import com.hostbooks.service.StudentService;
 
 @RestController
 @RequestMapping("/student")
+@Validated
 public class StudentController {
 
 	@Autowired
@@ -40,7 +46,7 @@ public class StudentController {
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteStudent(@PathVariable Integer id) {
-		//student.setStudentId(id);
+		// student.setStudentId(id);
 		service.deleteStudent(id);
 		ResponseEntity<String> response = new ResponseEntity<String>("Data Deleted", HttpStatus.OK);
 		return response;
@@ -48,8 +54,8 @@ public class StudentController {
 
 	@GetMapping("/fetch/{id}")
 	public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
-		//student.setStudentId(id);
-		Student student=service.getStudentByID(id);
+		// student.setStudentId(id);
+		Student student = service.getStudentByID(id);
 		ResponseEntity<Student> response = new ResponseEntity<Student>(student, HttpStatus.OK);
 		return response;
 	}
@@ -60,4 +66,5 @@ public class StudentController {
 		ResponseEntity<String> response = new ResponseEntity<String>("Data Saved", HttpStatus.CREATED);
 		return response;
 	}
+
 }

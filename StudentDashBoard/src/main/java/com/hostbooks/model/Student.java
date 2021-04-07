@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +24,15 @@ public class Student {
 	@Id
 	@GeneratedValue
 	@NonNull
+
 	private Integer studentId;
+	@NotNull
 	private String studentName;
+
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-z.-]+$")
 	private String studentMail;
+	@NotNull
 	private String studentBranch;
 
 }
