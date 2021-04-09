@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hostbooks.exceptions.DataNotFoundException;
-import com.hostbooks.exceptions.DataNotSavedException;
-import com.hostbooks.exceptions.IdNotFoundException;
 import com.hostbooks.model.Student;
 import com.hostbooks.service.StudentService;
 import com.hostbooks.validation.StudentValidator;
