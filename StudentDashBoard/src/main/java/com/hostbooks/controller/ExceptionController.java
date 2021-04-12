@@ -1,11 +1,11 @@
 package com.hostbooks.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.hostbooks.exceptions.BranchNotFoundException;
 import com.hostbooks.exceptions.DataNotFoundException;
 import com.hostbooks.exceptions.DataNotSavedException;
 import com.hostbooks.exceptions.IdNotFoundException;
@@ -18,7 +18,7 @@ public class ExceptionController {
 	@ExceptionHandler(MailNotValidException.class)
 	ResponseEntity<ErrorType> handleConstraintViolationException(MailNotValidException exception) {
 		return new ResponseEntity<ErrorType>(new ErrorType(exception.getMessage(), "MAIL NOT VALID ", "Student"),
-				HttpStatus.NOT_FOUND);
+				HttpStatus.EXPECTATION_FAILED);
 
 	}
 
@@ -31,7 +31,7 @@ public class ExceptionController {
 	@ExceptionHandler(DataNotSavedException.class)
 	public ResponseEntity<ErrorType> exception(DataNotSavedException exception) {
 		return new ResponseEntity<ErrorType>(new ErrorType(exception.getMessage(), "Data Not Saved ", "Student"),
-				HttpStatus.NOT_FOUND);
+				HttpStatus.NO_CONTENT);
 	}
 
 	@ExceptionHandler(IdNotFoundException.class)
@@ -52,4 +52,11 @@ public class ExceptionController {
 		return new ResponseEntity<ErrorType>(
 				new ErrorType(exception.getMessage(), "Data Not Found (Exception)", "Student"), HttpStatus.NOT_FOUND);
 	}
+
+	@ExceptionHandler(BranchNotFoundException.class)
+	public ResponseEntity<ErrorType> exception(BranchNotFoundException exception) {
+		return new ResponseEntity<ErrorType>(new ErrorType(exception.getMessage(), "Branch Not Found", "Student"),
+				HttpStatus.NOT_FOUND);
+	}
+
 }

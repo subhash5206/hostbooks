@@ -20,7 +20,7 @@ public class StudentValidator implements Validator {
 
 	@Override
 	public void validate(Object obj, Errors errors) {
-
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentName", "studentName.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentBranch", "studentbranch.empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentMail", "studentMail.empty");

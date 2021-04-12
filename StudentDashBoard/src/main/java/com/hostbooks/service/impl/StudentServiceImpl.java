@@ -2,36 +2,31 @@ package com.hostbooks.service.impl;
 
 import java.util.List;
 
-import javax.validation.ConstraintViolationException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hostbooks.dao.StudentDao;
+import com.hostbooks.exceptions.BranchNotFoundException;
 import com.hostbooks.exceptions.DataNotFoundException;
 import com.hostbooks.exceptions.IdNotFoundException;
-import com.hostbooks.exceptions.MailNotValidException;
 import com.hostbooks.model.Student;
 import com.hostbooks.service.StudentService;
 
 @Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentDao studentDao;
 
-	@Transactional
+	@Override
 	public Student saveStudent(Student student) {
-		
-		String mail=student.getStudentMail();
-		if(mail==null) {
-			throw new MailNotValidException("Please Enter Valid Email");
-		}
+
 		return studentDao.saveStudent(student);
 	}
 
-	@Transactional(readOnly = true)
+	@Override
 	public List<Student> getStudents() {
 		List<Student> allStudents = studentDao.getAllStudents();
 		if (allStudents == null) {
@@ -40,8 +35,8 @@ public class StudentServiceImpl implements StudentService {
 		return allStudents;
 	}
 
-	@Transactional
-	public void deleteStudent(Integer id) {
+	@Override
+	public void deleteStudent(String id) {
 
 		Student studentByID = studentDao.getStudentByID(id);
 		if (studentByID == null) {
@@ -54,8 +49,8 @@ public class StudentServiceImpl implements StudentService {
 		studentDao.deleteStudent(id);
 	}
 
-	@Transactional(readOnly = true)
-	public Student getStudentByID(Integer id) {
+	@Override
+	public Student getStudentByID(String id) {
 
 		Student studentByID = studentDao.getStudentByID(id);
 		if (studentByID == null) {
@@ -65,13 +60,23 @@ public class StudentServiceImpl implements StudentService {
 
 	}
 
-	@Transactional
+	@Override
 	public Student updateStudent(Student student) {
-		Integer id = student.getStudentId();
-		if (id == null) {
-			throw new IdNotFoundException("");
+		String id = student.getStudentId();
+		Student studentByID = studentDao.getStudentByID(id);
+		if (studentByID == null) {
+			throw new IdNotFoundException("Id  not found");
 		}
 		return studentDao.updateStudent(student);
+	}
+
+	@Override
+	public List<Student> findStudentsByBranchName(String branchName) {
+		
+		if (branchName == null) {
+			throw new BranchNotFoundException("Branch Not Found");
+		}
+		return studentDao.findStudentsByBranchName(branchName);
 	}
 
 }

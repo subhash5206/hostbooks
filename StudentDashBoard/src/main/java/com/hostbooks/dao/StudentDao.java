@@ -12,7 +12,10 @@ public interface StudentDao {
 
 	public Student updateStudent(Student student);
 
-	Student getStudentByID(Integer id);
+	Student getStudentByID(String id);
 
-	void deleteStudent(Integer id);
+	void deleteStudent(String id);
+
+	List<Student> findStudentsByBranchName(String branchName);
+
 }

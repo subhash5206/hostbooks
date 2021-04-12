@@ -9,9 +9,11 @@ public interface StudentService {
 
 	public List<Student> getStudents();
 
-	public void deleteStudent(Integer id);
+	public void deleteStudent(String id);
 
-	public Student getStudentByID(Integer id);
+	public Student getStudentByID(String id);
 
 	public Student updateStudent(Student student);
+
+	public List<Student> findStudentsByBranchName(String branchName);
 }
