@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hostbooks.dao.StudentDao;
 import com.hostbooks.exceptions.BranchNotFoundException;
 import com.hostbooks.exceptions.DataNotFoundException;
+import com.hostbooks.exceptions.DataNotSavedException;
 import com.hostbooks.exceptions.IdNotFoundException;
 import com.hostbooks.model.Student;
 import com.hostbooks.service.StudentService;
@@ -22,7 +23,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Student saveStudent(Student student) {
-
+		if (student == null) {
+			throw new DataNotSavedException(" Data Not Saved ");
+		}
 		return studentDao.saveStudent(student);
 	}
 
@@ -43,9 +46,6 @@ public class StudentServiceImpl implements StudentService {
 			throw new IdNotFoundException("Id  not found");
 		}
 
-		/*
-		 * if (id == null) { throw new IdNotFoundException(""); }
-		 */
 		studentDao.deleteStudent(id);
 	}
 
@@ -73,7 +73,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public List<Student> findStudentsByBranchName(String branchName) {
 		
-		if (branchName == null) {
+		if (branchName.isBlank()) {
 			throw new BranchNotFoundException("Branch Not Found");
 		}
 		return studentDao.findStudentsByBranchName(branchName);

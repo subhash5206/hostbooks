@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.hostbooks.validation.StudentValidator;
 @RestController
 @RequestMapping("/student")
 @Validated
+@CrossOrigin(origins="http://localhost:4200")
 public class StudentController {
 
 	@Autowired
@@ -34,7 +36,7 @@ public class StudentController {
 	@GetMapping("/fetch")
 	public ResponseEntity<?> getStudents() {
 		List<Student> list = service.getStudents();
-		return new ResponseEntity<List<Student>>(list, HttpStatus.FOUND);
+		return new ResponseEntity<List<Student>>(list, HttpStatus.ACCEPTED);
 
 	}
 
@@ -42,7 +44,7 @@ public class StudentController {
 	public ResponseEntity<?> saveStudent(@RequestBody Student student, BindingResult result) {
 		validator.validate(student, result);
 		if (result.hasErrors()) {
-			return new ResponseEntity<>(result.getAllErrors(), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>("Data Not Saved ", HttpStatus.NOT_ACCEPTABLE);
 		} else {
 			service.saveStudent(student);
 			return new ResponseEntity<>(student, HttpStatus.CREATED);
@@ -54,7 +56,7 @@ public class StudentController {
 	public ResponseEntity<?> deleteStudent(@PathVariable String id) {
 		// student.setStudentId(id);
 		service.deleteStudent(id);
-		ResponseEntity<String> response = new ResponseEntity<String>("Data Deleted From Id " + id, HttpStatus.OK);
+		ResponseEntity<String> response = new ResponseEntity<String>("Data Deleted " + id, HttpStatus.OK);
 		return response;
 	}
 
@@ -62,7 +64,7 @@ public class StudentController {
 	public ResponseEntity<?> getStudentById(@PathVariable String id) {
 		// student.setStudentId(id);
 		Student student = service.getStudentByID(id);
-		ResponseEntity<Student> response = new ResponseEntity<Student>(student, HttpStatus.OK);
+		ResponseEntity<Student> response = new ResponseEntity<Student>(student, HttpStatus.ACCEPTED);
 		return response;
 	}
 
@@ -70,7 +72,7 @@ public class StudentController {
 	public ResponseEntity<?> updateStudent(@RequestBody Student student, BindingResult result) {
 		validator.validate(student, result);
 		if (result.hasErrors()) {
-			return new ResponseEntity<>(result.getFieldError(), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<>("Data Not Updated", HttpStatus.NOT_ACCEPTABLE);
 		} else {
 			service.updateStudent(student);
 			return new ResponseEntity<>(student, HttpStatus.CREATED);
@@ -81,6 +83,6 @@ public class StudentController {
 	@GetMapping("/find/{branchName}")
 	public ResponseEntity<?> getStudentByBranch(@PathVariable String branchName) {
 		List<Student> list = service.findStudentsByBranchName(branchName);
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.ACCEPTED);
 	}
 }

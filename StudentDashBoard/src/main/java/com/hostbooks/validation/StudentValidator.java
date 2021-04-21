@@ -1,8 +1,5 @@
 package com.hostbooks.validation;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -20,10 +17,10 @@ public class StudentValidator implements Validator {
 
 	@Override
 	public void validate(Object obj, Errors errors) {
-		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentName", "studentName.empty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentBranch", "studentbranch.empty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentMail", "studentMail.empty");
+
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentName", "Student Name is Empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentBranch", "Student Branch is Empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "studentMail", "Student Mail is Empty");
 
 	}
 
